@@ -51,13 +51,16 @@ public class RNSecureKeyStoreModule extends ReactContextBaseJavaModule {
   }
 
   private SharedPreferences getSecureSharedPreferences() throws GeneralSecurityException, IOException {
-    String masterKeyAlias = MasterKey.DEFAULT_ALIAS;
+    String masterKeyAlias = MasterKey.DEFAULT_MASTER_KEY_ALIAS;
+
+    MasterKey mainKey = new MasterKey.Builder(reactContext)
+            .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
+            .build();
+
     return EncryptedSharedPreferences.create(
-      "secret_shared_prefs",
-      new MasterKey.Builder(reactContext, masterKeyAlias)
-        .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
-        .build(),
-      reactContext,
+            reactContext,
+            "secret_shared_prefs",
+            mainKey,
       EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
       EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
     );
