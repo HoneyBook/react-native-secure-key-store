@@ -48,5 +48,5 @@ repositories {
 
 dependencies {
     implementation 'com.facebook.react:react-native:+'
-    implementation "androidx.security:security-crypto:1.0.0-rc03"
+    implementation 'androidx.security:security-crypto-ktx:1.1.0-alpha03'
 }
